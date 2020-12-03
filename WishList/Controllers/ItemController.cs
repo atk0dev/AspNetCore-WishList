@@ -29,22 +29,19 @@ namespace WishList.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Item item)
+        public IActionResult Create(Item item)
         {
             _context.Items.Add(item);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
         [HttpDelete]
-        public IActionResult Delete([FromRoute] int id)
+        public IActionResult Delete(int id)
         {
-            var item = _context.Items.FirstOrDefault(i => i.Id == id);
-            if (item != null)
-            {
-                _context.Items.Remove(item);
-                _context.SaveChanges();
-            }
+            var item = _context.Items.FirstOrDefault(e => e.Id == id);
+            _context.Items.Remove(item);
+            _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
